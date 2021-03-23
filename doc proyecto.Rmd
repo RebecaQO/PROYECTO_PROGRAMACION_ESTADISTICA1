@@ -6,6 +6,11 @@ output: html_document
 ---
 # Introduccion:
 En los ultimos años en Bolivia esta presente el trabajo infantil, a diaro se puede observar niños en las calles pidiendo limosna, limpiando autos, vendiendo dulces, entre otros.
+En general los niños comienzan a trabajar desde muy tremprana edad por el factor de extrema pobreza en la familia.
+En Bolivia desde el 2014, es el único pais que permite el trabajo infantil a partir desde los diez años,siempre y cuando los niños continuen con sus estudios, la Organización internacional del Trabajo, las niñas y los niños pueden comnenzar a trabajar a los 14 años de edad en trabajos ligeros.(sobre la nueva ley de trabajo infantil de Bolivia,2018). En 2018 la edad minima autorizada para trabajar en Bolivia fue elevada a 14 años; a pesar que
+existe una ley se sigue observando a niños trabajado en las calles desde muy temprena edad,en Bolivia un gran parte dde la poblacion subsiste del trabajo informal, esto incrementa en fin de año , donde se observa a adolescentes entre 10 a 17 años buscando un trabajo.
+
+
 # Objetivos
 ## Objetivo general
 ## Objetivo especifico
