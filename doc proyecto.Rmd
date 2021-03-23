@@ -1,0 +1,12 @@
+---
+title: "Trabajo de niños,niñas y adolescentes"
+author: "RQO"
+date: "22/3/2021"
+output: html_document
+---
+# Introduccion:
+En los ultimos años en Bolivia esta presente el trabajo infantil, a diaro se puede observar niños en las calles pidiendo limosna, limpiando autos, vendiendo dulces, entre otros.
+# Objetivos
+## Objetivo general
+## Objetivo especifico
+# Motivación
