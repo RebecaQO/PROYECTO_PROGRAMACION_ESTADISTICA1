@@ -1,8 +1,7 @@
 ---
 title: "Trabajo de niños,niñas y adolescentes"
-author: "Rebeca Alicia Quispe Orellana"
-date: "22/3/2021"
-output: html_document
+author: " Univ. Rebeca Alicia Quispe Orellana"
+output: pdf_document
 ---
 # *Introduccion:*
 En Bolivia, en los ultimos años esta presente el trabajo infantil, se observa niños en las calles pidiendo limosna, limpiando autos, vendiendo dulces, entre otros.
@@ -29,13 +28,18 @@ Bolivia segun la encuesta de niños, niñas y adolescentes (ENNA 2019).
 + Identificar las causas por el cual realizan el trabajo.
 + Indicar los trabajos que realizan los niños
 + Identificar las consecuencias negativas que estan expuestos los niños, niñas y adolescentes en el trabajo que realizan.
-
++ Analizar y comparar las causas por el cual realizan el trabajo por departamento.
 
 
 
 
 # *Motivación*
-La presente investigación tiene como objetivo, realizar un analisis estadístico sobre el trabajo infantil en Bolivia,  con el fin de determinar los factores y caracterisiticas del diario vivir de los niños, niñas y adolescentes con informacion obtenida en la encuesta de niños, niñas y adolescentes (ENNA 2019) realizado por el Instituto Nacional de Estadistica (INE)
+El trabajo infantil es un problema que esta presente en todo todo el mundo,el motivo por el cual los niños trabajan, esta relacionado con la pobreza que existe en la familia, el cual conlleva consecuensias el la vida del niño, tanto como  en el presente y el futuro, limitando sus posibilidades de lograr tener una vida adecuada.
+
+Por las diversas formas de trabajo infantil, los niños pasan por varias situaciones de peligro, enfermedades ,incluso abandonos donde los niños se encuentran en los albergues y calles.
+
+La presente investigación tiene como objetivo, realizar un analisis estadístico sobre el trabajo infantil en Bolivia,  con el fin de determinar los factores y caracterisiticas del diario vivir de los niños, niñas y adolescentes con informacion obtenida en la encuesta de niños, niñas y adolescentes (ENNA 2019) realizado por el Instituto Nacional de Estadistica (INE).
+
 
 
 # *Bibliografia:*
