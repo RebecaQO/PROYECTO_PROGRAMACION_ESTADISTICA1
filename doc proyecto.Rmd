@@ -1,7 +1,7 @@
 ---
 title: "Trabajo de niños,niñas y adolescentes en Bolivia**"
 author: " Univ. Rebeca Alicia Quispe Orellana"
-output:html_document
+output: html_document
 ---
 # *Introduccion:*
 En Bolivia, en los ultimos años esta presente el trabajo infantil, se observa niños en las calles pidiendo limosna, limpiando autos, vendiendo dulces, entre otros.
@@ -41,6 +41,7 @@ La presente investigación tiene como objetivo, realizar un analisis estadístic
 
 # *Base de Datos*
 Encuesta de niños ,niñas y adolescentes en Bolivia (ENNA 2019)
+URL:
 https://github.com/RebecaQO/PROYECTO_PROGRAMACION_ESTADISTICA1/commit/f333cc93811aa5c3e5fd2a152578ab3ebe7ad6c4
 
 # *Bibliografia:*
