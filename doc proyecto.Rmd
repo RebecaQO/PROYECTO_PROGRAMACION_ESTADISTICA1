@@ -32,8 +32,6 @@ Bolivia segun la encuesta de niños, niñas y adolescentes (ENNA 2019).
 + Comparar el tiempo de estudio y de trabajo de los niños, niñas y adolescentes
 
 
-
-
 # *Motivación*
 El trabajo infantil es un problema que esta presente en todo todo el mundo,el motivo por el cual los niños trabajan, esta relacionado con la pobreza que existe en la familia, el cual conlleva consecuensias el la vida del niño, tanto como  en el presente y el futuro, limitando sus posibilidades de lograr tener una vida adecuada.
 
@@ -41,7 +39,10 @@ Por las diversas formas de trabajo infantil, los niños pasan por varias situaci
 
 La presente investigación tiene como objetivo, realizar un analisis estadístico sobre el trabajo infantil en Bolivia,  con el fin de determinar los factores y caracterisiticas del diario vivir de los niños, niñas y adolescentes con informacion obtenida en la encuesta de niños, niñas y adolescentes (ENNA 2019) realizado por el Instituto Nacional de Estadistica (INE).
 
-
+# *Base de Datos*
+Encuesta de niños ,niñas y adolescentes en Bolivia (ENNA 2019)
+https://github.com/RebecaQO/PROYECTO_PROGRAMACION_ESTADISTICA1/commit/f333cc93811aa5c3e5fd2a152578ab3ebe7ad6c4
 
 # *Bibliografia:*
 Montoya, Sandra(2015).TRABAJO INFANTIL UNA MIRADA DESDE LOS NIÑOS Y NIÑAS QUE LO RECLAMAN COMO UN DERECHO DE LA INFANCIA (Tesis de Maestria, Universidad Santo Tomás) URL: https://repository.usta.edu.co/bitstream/handle/11634/2513/2015sandramontoya.pdf?sequence=1&isAllowed=y
+
