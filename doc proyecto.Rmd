@@ -1,7 +1,7 @@
 ---
-title: "Trabajo de niños,niñas y adolescentes"
+title: "Trabajo de niños,niñas y adolescentes en Bolivia**"
 author: " Univ. Rebeca Alicia Quispe Orellana"
-output: pdf_document
+output:html_document
 ---
 # *Introduccion:*
 En Bolivia, en los ultimos años esta presente el trabajo infantil, se observa niños en las calles pidiendo limosna, limpiando autos, vendiendo dulces, entre otros.
@@ -12,7 +12,7 @@ En Bolivia desde el año 2014 es el unico pais de la latinoamerica que permite e
 
 El trabajo infantil conlleva varias consecuencias, como ser, la postergación de sus estudios por la falta de tiempo, incluso no lograr terminarlos. Tambien algunos trabajos son riesgosos para la salud de ellos, asi como el execibo horario laboral. 
 
-Desde esa perspectiva,analizaremos los factores y causas que genera el trabajo infantil en Bolivia 
+Desde esa perspectiva,analizaremos los factores y causas que genera el trabajo infantil en Bolivia, asi tambien las situaciones del diario vivir de los niños, niñas y adolescentes que trabajan.
 
 
 # *Objetivos*
@@ -26,9 +26,10 @@ Bolivia segun la encuesta de niños, niñas y adolescentes (ENNA 2019).
 ## Objetivo especifico
 
 + Identificar las causas por el cual realizan el trabajo.
-+ Indicar los trabajos que realizan los niños
++ Indicar los trabajos que realizan  los niños, niñas y adolescentes.
 + Identificar las consecuencias negativas que estan expuestos los niños, niñas y adolescentes en el trabajo que realizan.
 + Analizar y comparar las causas por el cual realizan el trabajo por departamento.
++ Comparar el tiempo de estudio y de trabajo de los niños, niñas y adolescentes
 
 
 
