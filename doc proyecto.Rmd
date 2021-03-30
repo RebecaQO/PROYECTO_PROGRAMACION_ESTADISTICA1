@@ -1,17 +1,42 @@
 ---
 title: "Trabajo de niños,niñas y adolescentes"
-author: "RQO"
+author: "Rebeca Alicia Quispe Orellana"
 date: "22/3/2021"
 output: html_document
 ---
-# Introduccion:
-En los ultimos años en Bolivia esta presente el trabajo infantil, a diaro se puede observar niños en las calles pidiendo limosna, limpiando autos, vendiendo dulces, entre otros.
-En general los niños comienzan a trabajar desde muy tremprana edad por el factor de extrema pobreza en la familia.
-En Bolivia desde el 2014, es el único pais que permite el trabajo infantil a partir desde los diez años,siempre y cuando los niños continuen con sus estudios, la Organización internacional del Trabajo, las niñas y los niños pueden comnenzar a trabajar a los 14 años de edad en trabajos ligeros.(sobre la nueva ley de trabajo infantil de Bolivia,2018). En 2018 la edad minima autorizada para trabajar en Bolivia fue elevada a 14 años; a pesar que
-existe una ley se sigue observando a niños trabajado en las calles desde muy temprena edad,en Bolivia un gran parte dde la poblacion subsiste del trabajo informal, esto incrementa en fin de año , donde se observa a adolescentes entre 10 a 17 años buscando un trabajo.
+# *Introduccion:*
+En Bolivia, en los ultimos años esta presente el trabajo infantil, se observa niños en las calles pidiendo limosna, limpiando autos, vendiendo dulces, entre otros.
+
+En general los niños comienzan a trabajar desde edades muy trempranas debido  a varios factores."El trabajo de los niños y niñas se ha vinculadode manera directa con la pobreza, la inequidad, la exclusión social, el analfabetismo y se atribuye exclusivamente a grupos marginados de la sociedad."(Montoya,2015).
+
+En Bolivia desde el año 2014 es el unico pais de la latinoamerica que permite el trabajo infantil,  a partir desde los diez años siempre y cuando los niños continuen con sus estudios, según la Organización internacional del Trabajo, las niñas y los niños pueden comenzar a trabajar a los 14 años de edad en trabajos ligeros. En 2018 la edad minima autorizada para trabajar en Bolivia fue elevada a 14 años; a pesar que existe una ley se sigue observando a niños trabajado en las calles desde muy temprena edad.
+
+El trabajo infantil conlleva varias consecuencias, como ser, la postergación de sus estudios por la falta de tiempo, incluso no lograr terminarlos. Tambien algunos trabajos son riesgosos para la salud de ellos, asi como el execibo horario laboral. 
+
+Desde esa perspectiva,analizaremos los factores y causas que genera el trabajo infantil en Bolivia 
 
 
-# Objetivos
+# *Objetivos*
+
 ## Objetivo general
+
+Determinar los factores y causas principales que genera el trabajo infantil en 
+Bolivia segun la encuesta de niños, niñas y adolescentes (ENNA 2019).
+
+
 ## Objetivo especifico
-# Motivación
+
++ Identificar las causas por el cual realizan el trabajo.
++ Indicar los trabajos que realizan los niños
++ Identificar las consecuencias negativas que estan expuestos los niños, niñas y adolescentes en el trabajo que realizan.
+
+
+
+
+
+# *Motivación*
+La presente investigación tiene como objetivo, realizar un analisis estadístico sobre el trabajo infantil en Bolivia,  con el fin de determinar los factores y caracterisiticas del diario vivir de los niños, niñas y adolescentes con informacion obtenida en la encuesta de niños, niñas y adolescentes (ENNA 2019) realizado por el Instituto Nacional de Estadistica (INE)
+
+
+# *Bibliografia:*
+Montoya, Sandra(2015).TRABAJO INFANTIL UNA MIRADA DESDE LOS NIÑOS Y NIÑAS QUE LO RECLAMAN COMO UN DERECHO DE LA INFANCIA (Tesis de Maestria, Universidad Santo Tomás) URL: https://repository.usta.edu.co/bitstream/handle/11634/2513/2015sandramontoya.pdf?sequence=1&isAllowed=y
