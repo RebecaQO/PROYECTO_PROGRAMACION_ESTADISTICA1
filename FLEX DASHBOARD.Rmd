@@ -1,0 +1,399 @@
+---
+title: "mi primer tablero"
+output:
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+    source_code: embed
+---
+
+
+
+```{r}
+
+
+load(url("https://github.com/RebecaQO/PROYECTO_PROGRAMACION_ESTADISTICA1/blob/codigo_proyecto/ENNA19.RData?raw=true"))
+library(dplyr)
+library(ggplot2)
+library(datos)
+library(DT)
+library(sparklyr)
+sc <- spark_connect(master = "local",version="2.4.7")
+knitr::opts_chunk$set(fig.width = 5,fig.asp=1/3)
+bd=enna19%>%rename(Iestudio=ns01a_01,motivoEs=ns01a_02,trab=ns02a_01,tipoTRab=ns02b_11a1)%>%mutate(trab1=(trab=="1"))
+tot=bd%>%filter(trab1==T)%>%summarise(t=sum(trab1))
+tot=as.numeric(tot)
+```
+
+Column {data-width=650}
+-----------------------------------------------------------------------
+# I1
+##
+
+### PROPORCION DE NIÑOS QUE TIENEN UNA ACTIVIDAD LABORAL
+```{r}
+
+pt=bd%>%summarise(propDeTrabajo=mean(trab1))%>%select(propDeTrabajo) 
+pt=pt%>%mutate(propDeNoTrabajo=1-propDeTrabajo) 
+pt%>% DT::datatable()
+
+```
+
+
+
+### PROPORCION POR DEPARTAMENTO
+
+```{r}
+departementos=c("Chuquisaca","La Paz","Cochabamba","Oruro","Potosí","Tarija","Santa Cruz","Beni","Pando")
+pt=bd%>%group_by(depto)%>%summarise(propDeTrabajo=mean(trab1))%>%select(propDeTrabajo) 
+pt=cbind(departementos,pt)
+pt=pt%>%mutate(propDeNoTrabajo=1-propDeTrabajo) 
+pt%>% DT::datatable()
+
+```
+Column {data-width=650}
+-----------------------------------------------------------------------
+### PROPORCION DE NIÑOS ,NIÑAS Y ADOLESCENTES QUE TIENEN UNA ACTIVIDAD LABORAL
+```{r}
+aux1=bd%>%group_by(area)%>%summarise(prop=mean(trab1==T))%>%mutate(condicion="actividadLaboral")
+aux2=bd%>%group_by(area)%>%summarise(prop=mean(trab1==F))%>%mutate(condicion="no_actividadLaboral")
+Area=c("Urbana","Rural","Urbana","Rural")
+aux=rbind(aux1,aux2)
+aux=cbind(Area,aux)
+aux=aux%>%select(Area,condicion,prop)
+
+aux%>% DT::datatable()
+```
+###
+```{r}
+ggplot (aux, aes (condicion,prop),fill=condicion) +geom_bar(position="dodge",stat ="identity")+facet_grid (Area~ . )
+```
+
+
+# I2
+Column {data-width=600}
+-----------------------------------------------------------------------
+### PROPORCION DE NIÑOS MENORES DE 13 AÑOS QUE TRABAJAN
+```{r}
+
+bd4=bd%>%filter(trab1==T)%>%select(area,depto,ns001a_03)
+tot=bd%>%filter(trab1==T)%>%summarise(t=sum(trab1))
+tot=as.numeric(tot)
+sp_bd4<-copy_to(sc,bd4)
+sp_bd4%>%filter(ns001a_03>=5,ns001a_03<=13)%>%count()%>%summarise(porcentaje=n/tot)
+
+```
+### PROPORCION DE NIÑOS MENORES DE 13 AÑOS QUE TRABAJAN SEGUN DEPARTAMENTO
+
+```{r}
+
+
+sp_bd4%>%filter(ns001a_03>=5,ns001a_03<=13)%>%group_by(depto)%>%count()%>%summarise(porcentaje=n/tot)
+
+```
+### PROPORCION DE NIÑOS MENORES DE 13 AÑOS POR AREA
+```{r}
+sp_bd4%>%filter(ns001a_03>=5,ns001a_03<=13)%>%group_by(area)%>%count()%>%summarise(porcentaje=n/tot)
+
+```
+
+# I3
+Column {data-width=600}
+-----------------------------------------------------------------------
+### ACTIVIDAD LABORAL
+
+```{r}
+tot=bd%>%filter(trab1==T)%>%summarise(t=sum(trab1))
+tot=as.numeric(tot)
+ACTIVIDAD_ECONOMICA=c("Recolector(a)de caña de azúcar","Recolector(a) de castaña","Minero(a)","Pescador(a)","Ladrillero(a)","Vendedor(a) de bebidas alcohólicas","Recolector(a) de desechos","Yesero(a)","Agricultor(a)","Criador(a)de ganado mayor","Atender mingitorios","Albañil","Cuidador(a) de autos","Otro tipo de actividad")
+ax=bd%>%filter(trab1==T)%>%group_by(tipoTRab)%>%summarise(proporcion=sum(trab1)/tot)
+ax=cbind(ax,ACTIVIDAD_ECONOMICA)
+ax=ax%>%filter(proporcion>0.01)
+ggplot(ax,aes(ACTIVIDAD_ECONOMICA,proporcion,fill=ACTIVIDAD_ECONOMICA))+geom_bar(stat="identity",colour="white")+coord_flip()
+```
+
+
+## SEGUN AREA
+
+### ACTIVIDAD ECONOMICA EN EL AREA URBANA
+```{r}
+tot1=bd%>%filter(trab1==T,area==1)%>%count()
+tot1=as.numeric(tot1)
+ax=bd%>%filter(trab1==T,area==1)%>%group_by(tipoTRab)%>%summarise(proporcion=sum(trab1)/tot1)
+ax=ax%>%filter(proporcion>0.01)
+ACTIVIDAD_ECONOMICA=c("Agricultor(a)","Albañil","Otro tipo de actividad")
+ax=cbind(ax,ACTIVIDAD_ECONOMICA)
+ggplot(ax,aes(ACTIVIDAD_ECONOMICA,proporcion,fill=ACTIVIDAD_ECONOMICA))+geom_bar(stat="identity",colour="white")+coord_flip()
+```
+
+### ACTIVIDAD LABORAL EN EL AREA RURAL
+```{r}
+tot1=bd%>%filter(trab1==T,area==2)%>%count()
+tot1=as.numeric(tot1)
+ax=bd%>%filter(trab1==T,area==2)%>%group_by(tipoTRab)%>%summarise(proporcion=sum(trab1)/tot)
+ax=ax%>%filter(proporcion>0.01)
+ACTIVIDAD_ECONOMICA=c("Recolector(a) de castaña","Agricultor(a)","Criador(a)de ganado mayor","Albañil","Otro tipo de actividad")
+ax=cbind(ax,ACTIVIDAD_ECONOMICA)
+ggplot(ax,aes(ACTIVIDAD_ECONOMICA,proporcion,fill=ACTIVIDAD_ECONOMICA))+geom_bar(stat="identity",colour="white")+coord_flip()
+```
+
+
+# I4
+##
+### Promedio de horas de trabajo
+```{r}
+ax1=bd%>%filter(trab1==T)%>%mutate(totalhoras=ns02b_16aa+(ns02b_16ab)/60+ns02b_16ba+(ns02b_16bb)/60+ns02b_16ca+(ns02b_16cb)/60+ns02b_16da+(ns02b_16db)/60+ns02b_16ea+(ns02b_16eb)/60+ns02b_16fa+(ns02b_16fb)/60+ns02b_16ga+(ns02b_16gb)/60)
+ax1%>%summarise(promedio=mean(totalhoras),proporcion_demas40horas=mean(totalhoras>=40))%>%DT::datatable()
+
+```
+
+### PROMEDIO POR AREA
+```{r}
+ax1%>%group_by(area)%>%summarise(promedio=mean(totalhoras),proporcion_demas40horas=mean(totalhoras>=40))%>%DT::datatable()
+
+```
+Column {data-width=650}
+--------------------------------------------------------------------
+### promedio de horas de trabajo por sexo
+```{r}
+ax1%>%group_by(ns001a_02)%>%summarise(promedio=mean(totalhoras),proporcion_demas40horas=mean(totalhoras>=40))%>%DT::datatable()
+```
+
+# I5
+##
+### PORCENTAJE DE A QUIEN AFECTARIA SI NO TRABAJARIA
+```{r}
+
+ax2=bd%>%filter(trab1==T)%>%group_by(ns02b_19aa)%>%count()
+persona_afecta=c("1. A mí mismo, sin afectar a mi hogar","2.A mí y a mi hogar","3.No afectaría en nada")
+ax2=cbind(ax2,persona_afecta)
+ax2=ax2%>%rename(persona_afectada=...3)%>%group_by(persona_afectada)%>%summarise(porcentaje=(n/tot)*100)
+ax2%>%DT::datatable()
+ 
+
+
+```
+##
+###
+```{r}
+ggplot(ax2, aes(x=1, y=porcentaje, fill=persona_afecta)) + geom_bar(stat="identity") +geom_text(aes(label=paste0(round(porcentaje,1),"%")), position = position_stack(vjust = 0.5)) +coord_polar(theta = "y") + theme_void()
+```
+
+
+# I6
+## 
+
+###  porcentaje de ñiños esta de acuerdo de trabajar
+```{r}
+ax6=bd%>%filter(trab1==T)%>%group_by(ns02b_20)%>%count()
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(Si_esta_de_acuerdo_en_trabaja=...3)%>%group_by(Si_esta_de_acuerdo_en_trabaja)%>%summarise(porcentaje=(n/tot)*100)
+porcentaje=(100-(ax6$porcentaje))
+aux=rbind(ax6,porcentaje)
+ax6%>%DT::datatable()
+
+```
+
+###
+```{r}
+ggplot(ax6, aes(x=1, y=porcentaje, fill=Si_esta_de_acuerdo_en_trabaja)) + geom_bar(stat="identity") +geom_text(aes(label=paste0(round(porcentaje,1),"%")), position = position_stack(vjust = 0.5)) +coord_polar(theta = "y") + theme_void()
+```
+
+
+##  porcentaje de ñiños esta de acuerdo de trabajar por sexo
+### porcentaje de ñiños esta de acuerdo de trabajar 
+```{r}
+tot1=bd%>%filter(trab1==T,ns001a_02==1)%>%count()
+tot1=as.numeric(tot1)
+ax6=bd%>%filter(trab1==T,ns001a_02==1)%>%group_by(ns02b_20)%>%count()
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(Si_esta_de_acuerdo_en_trabaja=...3)%>%group_by(Si_esta_de_acuerdo_en_trabaja)%>%summarise(porcentaje=(n/tot1)*100)
+ax6%>%DT::datatable()
+
+```
+### porcentaje de ñiñas esta de acuerdo de trabajar 
+```{r}
+tot1=bd%>%filter(trab1==T,ns001a_02==2)%>%count()
+tot1=as.numeric(tot1)
+ax6=bd%>%filter(trab1==T,ns001a_02==2)%>%group_by(ns02b_20)%>%count()
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(Si_esta_de_acuerdo_en_trabaja=...3)%>%group_by(Si_esta_de_acuerdo_en_trabaja)%>%summarise(porcentaje=(n/tot1)*100)
+ax6%>%DT::datatable()
+
+```
+
+# I8
+##
+### PROMEDIO DE INGRESO ECONOMICO
+```{r}
+#group_by(ns02c_29b)
+ax8=bd%>%filter(trab1==T)%>%select(depto,area,ns001a_02,ns02c_29b,ns02c_29a)%>%mutate(Ca=is.na(ns02c_29b))
+ax8=ax8%>%filter(Ca==F,ns02c_29a<4000)
+aux8=ax8%>%group_by(ns02c_29b)%>%summarise(prom=mean(ns02c_29a))
+frecuencia=c("Diario","Semanal","Mensual")
+aux8=cbind(frecuencia,aux8)
+
+aux8%>%select(frecuencia,prom)%>%DT::datatable()
+
+```
+
+
+## SEGUN AREA
+### AREA URBANA
+```{r}
+ax81=bd%>%filter(trab1==T,area==1)%>%select(depto,area,ns001a_02,ns02c_29b,ns02c_29a)%>%mutate(Ca=is.na(ns02c_29b))
+ax81=ax81%>%filter(Ca==F,ns02c_29a<4000)
+ax81=ax81%>%group_by(ns02c_29b)%>%summarise(prom=mean(ns02c_29a))
+aux81=cbind(frecuencia,ax81)
+
+aux81%>%select(frecuencia,prom)%>%DT::datatable()
+```
+
+### AREA RURAL
+```{r}
+ax81=bd%>%filter(trab1==T,area==2)%>%select(depto,area,ns001a_02,ns02c_29b,ns02c_29a)%>%mutate(Ca=is.na(ns02c_29b))
+ax81=ax81%>%filter(Ca==F,ns02c_29a<4000)
+ax81=ax81%>%group_by(ns02c_29b)%>%summarise(prom=mean(ns02c_29a))
+aux81=cbind(frecuencia,ax81)
+
+aux81%>%select(frecuencia,prom)%>%DT::datatable()
+```
+
+# I9
+## 
+### PROPORCION DE NIÑOS ,NIÑAS Y ADOLESCENTES QUE ESTAN EXPUESTOS A UNA ACTIVIDAD PELIGROSA
+```{r}
+bd2=bd%>%filter(trab1==T)%>%select(depto,area,ns001a_02,ns02d_33a,ns02d_34,ns02d_35,ns02d_36a)%>%mutate(rp=(ns02d_33a!=12|ns02d_34!=2|ns02d_35!=2|ns02d_36a!=11))
+aux=bd2%>%summarise(Porcentaje=mean(rp)*100)
+Porcentaje=(100-(aux$Porcentaje))
+aux=rbind(aux,Porcentaje)
+Estan_expuesto=c("si","no")
+aux=cbind(Estan_expuesto,aux)
+aux%>%DT::datatable()
+
+```
+###
+```{r}
+ggplot(aux, aes(x=1, y=Porcentaje, fill=Estan_expuesto)) + geom_bar(stat="identity") +geom_text(aes(label=paste0(round(Porcentaje,1),"%")), position = position_stack(vjust = 0.5)) +coord_polar(theta = "y") + theme_void()
+```
+
+## SEGUN AREA
+### AREA URBANA
+```{r}
+bd2=bd%>%filter(trab1==T,area==1)%>%select(depto,area,ns001a_02,ns02d_33a,ns02d_34,ns02d_35,ns02d_36a)%>%mutate(rp=(ns02d_33a!=12|ns02d_34!=2|ns02d_35!=2|ns02d_36a!=11))
+aux=bd2%>%summarise(Porcentaje=mean(rp)*100)
+Porcentaje=(100-(aux$Porcentaje))
+aux=rbind(aux,Porcentaje)
+Estan_expuesto=c("si","no")
+aux=cbind(Estan_expuesto,aux)
+aux%>%DT::datatable()
+
+```
+### AREA RURAL
+```{r}
+bd2=bd%>%filter(trab1==T,area==2)%>%select(depto,area,ns001a_02,ns02d_33a,ns02d_34,ns02d_35,ns02d_36a)%>%mutate(rp=(ns02d_33a!=12|ns02d_34!=2|ns02d_35!=2|ns02d_36a!=11))
+aux=bd2%>%summarise(Porcentaje=mean(rp)*100)
+Porcentaje=(100-(aux$Porcentaje))
+aux=rbind(aux,Porcentaje)
+Estan_expuesto=c("si","no")
+aux=cbind(Estan_expuesto,aux)
+aux%>%DT::datatable()
+
+```
+
+# I9
+
+##
+### Porcenta de niñas y adolescentes que no Ingresaron al colegio
+```{r}
+
+ax6=bd%>%filter(trab1==T)%>%group_by(Iestudio)%>%count()
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(Se_encuentra_Edu=...3)%>%group_by(Se_encuentra_Edu)%>%summarise(porcentaje=(n/tot)*100)
+ax6%>%DT::datatable()
+
+```
+
+
+## Porcenta de niñas y adolescentes que no Ingresaron al colegio segun sexo
+### Porcenta de niños y adolescentes que no Ingresaron al colegio
+```{r}
+tot1=bd%>%filter(trab1==T,ns001a_02==1)%>%count()
+tot1=as.numeric(tot1)
+ax6=bd%>%filter(trab1==T,ns001a_02==1)%>%group_by(Iestudio)%>%count()
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(Se_encuentra_Edu=...3)%>%group_by(Se_encuentra_Edu)%>%summarise(porcentaje=(n/tot1)*100)
+ax6%>%DT::datatable()
+
+```
+
+### Porcenta de niñas y adolescentes que no Ingresaron al colegio
+```{r}
+tot1=bd%>%filter(trab1==T,ns001a_02==2)%>%count()
+tot1=as.numeric(tot1)
+
+ax6=bd%>%filter(trab1==T,ns001a_02==2)%>%group_by(Iestudio)%>%count()
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(Se_encuentra_Edu=...3)%>%group_by(Se_encuentra_Edu)%>%summarise(porcentaje=(n/tot1)*100)
+ax6%>%DT::datatable()
+
+```
+###
+
+```{r}
+ggplot(ax6, aes(x=1, y=porcentaje, fill=Se_encuentra_Edu)) + geom_bar(stat="identity") +geom_text(aes(label=paste0(round(porcentaje,1),"%")), position = position_stack(vjust = 0.5)) +coord_polar(theta = "y") + theme_void()
+```
+
+# I10
+
+##
+### Porcentaje de niños, niñas y adolescentes que no no asistieron a las clases 
+```{r}
+
+ax6=bd%>%filter(trab1==T)%>%group_by(ns01a_04)%>%count()%>%mutate(C=is.na(ns01a_04))
+ax6=ax6%>%filter(C==F)
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(NO_asistio_a_Clases=...4)%>%group_by(NO_asistio_a_Clases)%>%summarise(porcentaje=(n/tot)*100)
+ax6%>%DT::datatable()
+
+```
+###
+```{r}
+ggplot(ax6, aes(x=1, y=porcentaje, fill=NO_asistio_a_Clases)) + geom_bar(stat="identity") +geom_text(aes(label=paste0(round(porcentaje,1),"%")), position = position_stack(vjust = 0.5)) +coord_polar(theta = "y") + theme_void()
+```
+
+## Porcenta de niñas y adolescentes que no Ingresaron al colegio segun sexo
+
+### Porcenta de niños y adolescentes que no Ingresaron al colegio
+```{r}
+tot1=bd%>%filter(trab1==T,ns001a_02==1)%>%count()
+tot1=as.numeric(tot1)
+
+ax6=bd%>%filter(trab1==T,ns001a_02==1)%>%group_by(ns01a_04)%>%count()%>%mutate(C=is.na(ns01a_04))
+ax6=ax6%>%filter(C==F)
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(NO_asistio_a_Clases=...4)%>%group_by(NO_asistio_a_Clases)%>%summarise(porcentaje=(n/tot1)*100)
+ax6%>%DT::datatable()
+
+```
+
+### Porcenta de niñas y adolescentes que no Ingresaron al colegio
+```{r}
+tot1=bd%>%filter(trab1==T,ns001a_02==2)%>%count()
+tot1=as.numeric(tot1)
+ax6=bd%>%filter(trab1==T,ns001a_02==2)%>%group_by(ns01a_04)%>%count()%>%mutate(C=is.na(ns01a_04))
+ax6=ax6%>%filter(C==F)
+si=c("Si","No")
+ax6=cbind(ax6,si)
+ax6=ax6%>%rename(NO_asistio_a_Clases=...4)%>%group_by(NO_asistio_a_Clases)%>%summarise(porcentaje=(n/tot1)*100)
+ax6%>%DT::datatable()
+
+```
